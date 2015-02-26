@@ -2,14 +2,14 @@
 ********************************************************************************
 \file   targetsection.h
 
-\brief  Special function linking for TERASIC DE2-115 Eval Board MN driver
+\brief  Special function linking for B&R Antares Interface Card
 
 This header file defines macros for Altera Nios II targets to link specific
 functions to tightly-coupled memory.
+*******************************************************************************/
 
+/*------------------------------------------------------------------------------
 Copyright (c) 2014, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
-Copyright (c) 2012, SYSTEC electronik GmbH
-Copyright (c) 2012, Kalycito Infotech Private Ltd.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

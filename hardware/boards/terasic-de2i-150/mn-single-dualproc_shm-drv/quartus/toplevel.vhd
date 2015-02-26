@@ -309,15 +309,15 @@ signal nios_flash_reset_n   : std_logic;
             clk_clk                                    : in    std_logic                     := 'X';             -- clk
             reset_reset_n                              : in    std_logic                     := 'X';             -- reset_n
             clk_100_clk                                : in    std_logic                     := 'X';             -- clk
-            sdram_addr                                 : out   std_logic_vector(12 downto 0);                    -- addr
-            sdram_ba                                   : out   std_logic_vector(1 downto 0);                     -- ba
-            sdram_cas_n                                : out   std_logic;                                        -- cas_n
-            sdram_cke                                  : out   std_logic;                                        -- cke
-            sdram_cs_n                                 : out   std_logic;                                        -- cs_n
-            sdram_dq                                   : inout std_logic_vector(31 downto 0) := (others => 'X'); -- dq
-            sdram_dqm                                  : out   std_logic_vector(3 downto 0);                     -- dqm
-            sdram_ras_n                                : out   std_logic;                                        -- ras_n
-            sdram_we_n                                 : out   std_logic;                                        -- we_n
+--            sdram_addr                                 : out   std_logic_vector(12 downto 0);                    -- addr
+--            sdram_ba                                   : out   std_logic_vector(1 downto 0);                     -- ba
+--            sdram_cas_n                                : out   std_logic;                                        -- cas_n
+--            sdram_cke                                  : out   std_logic;                                        -- cke
+--            sdram_cs_n                                 : out   std_logic;                                        -- cs_n
+--            sdram_dq                                   : inout std_logic_vector(31 downto 0) := (others => 'X'); -- dq
+--            sdram_dqm                                  : out   std_logic_vector(3 downto 0);                     -- dqm
+--            sdram_ras_n                                : out   std_logic;                                        -- ras_n
+--            sdram_we_n                                 : out   std_logic;                                        -- we_n
             led_external_connection_export             : out   std_logic_vector(20 downto 0);                    -- export
             button_external_connection_export          : in    std_logic_vector(3 downto 0)  := (others => 'X'); -- export
             pcie_ip_reconfig_togxb_data                : in    std_logic_vector(3 downto 0)  := (others => 'X'); -- data
@@ -346,18 +346,18 @@ signal nios_flash_reset_n   : std_logic;
             pcie_ip_rx_in_rx_datain_0                  : in    std_logic                     := 'X';             -- rx_datain_0
             pcie_ip_tx_out_tx_dataout_0                : out   std_logic;                                        -- tx_dataout_0
             pcie_ip_reconfig_fromgxb_0_data            : out   std_logic_vector(4 downto 0);                     -- data
-            tristate_conduit_bridge_0_out_SSRAM_1_CS_N : out   std_logic_vector(0 downto 0);                     -- SSRAM_1_CS_N
+            --tristate_conduit_bridge_0_out_SSRAM_1_CS_N : out   std_logic_vector(0 downto 0);                     -- SSRAM_1_CS_N
             tristate_conduit_bridge_0_out_DATA         : inout std_logic_vector(31 downto 0) := (others => 'X'); -- DATA
             tristate_conduit_bridge_0_out_SSRAM_BE_N   : out   std_logic_vector(3 downto 0);                     -- SSRAM_BE_N
-            tristate_conduit_bridge_0_out_CFI_0_WR_N   : out   std_logic_vector(0 downto 0);                     -- CFI_0_WR_N
+            --tristate_conduit_bridge_0_out_CFI_0_WR_N   : out   std_logic_vector(0 downto 0);                     -- CFI_0_WR_N
             tristate_conduit_bridge_0_out_ADDR         : out   std_logic_vector(25 downto 0);                    -- ADDR
             tristate_conduit_bridge_0_out_SSRAM_BT_N   : out   std_logic_vector(0 downto 0);                     -- SSRAM_BT_N
             tristate_conduit_bridge_0_out_SSRAM_WR_N   : out   std_logic_vector(0 downto 0);                     -- SSRAM_WR_N
-            tristate_conduit_bridge_0_out_CFI_0_OE_N   : out   std_logic_vector(0 downto 0);                     -- CFI_0_OE_N
+            --tristate_conduit_bridge_0_out_CFI_0_OE_N   : out   std_logic_vector(0 downto 0);                     -- CFI_0_OE_N
             tristate_conduit_bridge_0_out_SSRAM_0_CS_N : out   std_logic_vector(0 downto 0);                     -- SSRAM_0_CS_N
-            tristate_conduit_bridge_0_out_CFI_0_CS_N   : out   std_logic_vector(0 downto 0);                     -- CFI_0_CS_N
+            --tristate_conduit_bridge_0_out_CFI_0_CS_N   : out   std_logic_vector(0 downto 0);                     -- CFI_0_CS_N
             tristate_conduit_bridge_0_out_SSRAM_OE_N   : out   std_logic_vector(0 downto 0);                     -- SSRAM_OE_N
-            tristate_conduit_bridge_0_out_CFI_0_RST_N  : out   std_logic_vector(0 downto 0);                     -- CFI_0_RST_N
+            --tristate_conduit_bridge_0_out_CFI_0_RST_N  : out   std_logic_vector(0 downto 0);                     -- CFI_0_RST_N
             flash_reset_n_export                       : out   std_logic;                                        -- export
             openmac_mii_txEnable                       : out   std_logic_vector(0 downto 0);                     -- txEnable
             openmac_mii_txData                         : out   std_logic_vector(3 downto 0);                     -- txData
@@ -370,8 +370,9 @@ signal nios_flash_reset_n   : std_logic;
             openmac_smi_clk                            : out   std_logic_vector(0 downto 0);                     -- clk
             openmac_smi_dio                            : inout std_logic_vector(0 downto 0)  := (others => 'X'); -- dio
             clk_150_clk                                : in    std_logic                     := 'X';             -- clk
-            benchmark_pio_export                       : out   std_logic_vector(7 downto 0)                      -- export
-        );
+            benchmark_pio_export                       : out   std_logic_vector(7 downto 0)
+				--host_benchmark_pio_export                                     : out   std_logic_vector(7 downto 0) -- export
+				);
     end component mnSingleDualProcDrv;
 
 begin
@@ -412,27 +413,27 @@ begin
                 pcie_ip_tx_out_tx_dataout_0                => PCIE_TX_P(0),
                 led_external_connection_export             => ledRG(20 downto 0),
                 button_external_connection_export          => KEY,
-                sdram_addr                                 => DRAM_ADDR,
-                sdram_ba                                   => DRAM_BA,
-                sdram_cas_n                                => DRAM_CAS_N,
-                sdram_cke                                  => DRAM_CKE,
-                sdram_cs_n                                 => DRAM_CS_N,
-                sdram_dq                                   => DRAM_DQ,
-                sdram_dqm                                  => DRAM_DQM,
-                sdram_ras_n                                => DRAM_RAS_N,
-                sdram_we_n                                 => DRAM_WE_N,
-                tristate_conduit_bridge_0_out_SSRAM_1_CS_N => SSRAM1_CE_N,
+--                sdram_addr                                 => DRAM_ADDR,
+--                sdram_ba                                   => DRAM_BA,
+--                sdram_cas_n                                => DRAM_CAS_N,
+--                sdram_cke                                  => DRAM_CKE,
+--                sdram_cs_n                                 => DRAM_CS_N,
+--                sdram_dq                                   => DRAM_DQ,
+--                sdram_dqm                                  => DRAM_DQM,
+--                sdram_ras_n                                => DRAM_RAS_N,
+--                sdram_we_n                                 => DRAM_WE_N,
+               -- tristate_conduit_bridge_0_out_SSRAM_1_CS_N => SSRAM1_CE_N,
                 tristate_conduit_bridge_0_out_DATA         => FS_DQ,
                 tristate_conduit_bridge_0_out_SSRAM_BE_N   => SSRAM_BE,
-                tristate_conduit_bridge_0_out_CFI_0_WR_N   => FL_WE_N,
+                --tristate_conduit_bridge_0_out_CFI_0_WR_N   => FL_WE_N,
                 tristate_conduit_bridge_0_out_ADDR         => FS_ADDR,
                 tristate_conduit_bridge_0_out_SSRAM_BT_N   => SSRAM_ADSC_N,
                 tristate_conduit_bridge_0_out_SSRAM_WR_N   => SSRAM_WE_N,
-                tristate_conduit_bridge_0_out_CFI_0_OE_N   => FL_OE_N,
+                --tristate_conduit_bridge_0_out_CFI_0_OE_N   => FL_OE_N,
                 tristate_conduit_bridge_0_out_SSRAM_0_CS_N => SSRAM0_CE_N,
-                tristate_conduit_bridge_0_out_CFI_0_CS_N   => FL_CE_N,
+                --tristate_conduit_bridge_0_out_CFI_0_CS_N   => FL_CE_N,
                 tristate_conduit_bridge_0_out_SSRAM_OE_N   => SSRAM_OE_N,
-                tristate_conduit_bridge_0_out_CFI_0_RST_N  => flash_reset_n,
+                --tristate_conduit_bridge_0_out_CFI_0_RST_N  => flash_reset_n,
                 flash_reset_n_export                       => nios_flash_reset_n,
                 openmac_mii_txEnable                       => ENET_TX_EN,
                 openmac_mii_txData                         => ENET_TX_DATA,
@@ -445,7 +446,7 @@ begin
                 openmac_smi_clk                            => ENET_MDC,
                 openmac_smi_dio                            => ENET_MDIO,
                 benchmark_pio_export                       => ledRG_b( 7 downto 0)
-            );
+					);
 
     --TODO: Remove this block - Just for checking FPGA design
     heart_beat_clk50: component heart_beat

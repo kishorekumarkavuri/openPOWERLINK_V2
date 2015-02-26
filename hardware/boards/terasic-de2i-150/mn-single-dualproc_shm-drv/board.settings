@@ -55,10 +55,11 @@ CFG_DRV_BSP_OPT_LEVEL=-O2
 
 # OPENMAC is present
 CFG_OPENMAC=1
-# HOSTINTERFACE is present
-CFG_HOSTINTERFACE=0
+# DUALPROCSHM is present
+CFG_DUALPROCSHM=1
 # Type of POWERLINK node supported by this platform
 CFG_NODE=MN
 
-# JTAG Cable
-CFG_JTAG_CABLE="USB-Blaster [USB-0]"
+CFG_BOARD_CFLAGS="\
+-D__DE2i_150__ \
+"
