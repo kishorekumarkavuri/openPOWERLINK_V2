@@ -92,6 +92,7 @@ else
 fi
 
 # Let's source the board.settings (null.settings before)
+BSP_CFLAGS=
 BOARD_SETTINGS_FILE=${BOARD_PATH}/board.settings
 if [ -f ${BOARD_SETTINGS_FILE} ]; then
     source ${BOARD_SETTINGS_FILE}
@@ -153,9 +154,14 @@ BSP_GEN_ARGS="${SEL_BSP_TYPE} ${BSP_PATH} ${BOARD_PATH}/quartus \
 --cmd add_section_mapping .tc_i_mem ${SEL_TCI_MEM_NAME} \
 "
 
+# Add flag for explicitly using EPCS flash.
+if [ -n "${SEL_EPCS}" ]; then
+    BSP_CFLAGS+="-DALT_USE_EPCS_FLASH "
+fi
+
 if [ -n "${SEL_MAX_HEAP_BYTES}" ];
 then
-    BSP_GEN_ARGS+="--set hal.make.bsp_cflags_user_flags -DALT_MAX_HEAP_BYTES=${SEL_MAX_HEAP_BYTES} "
+    BSP_CFLAGS+="-DALT_MAX_HEAP_BYTES=${SEL_MAX_HEAP_BYTES} "
     echo "INFO: Specify maximum heap size to ${SEL_MAX_HEAP_BYTES} BYTES!"
 fi
 
@@ -166,9 +172,11 @@ then
     --set hal.make.bsp_cflags_optimization ${SEL_BSP_OPT_LEVEL} \
     "
 else
-    BSP_GEN_ARGS+="--set hal.make.bsp_cflags_optimization -O0"
+    BSP_GEN_ARGS+="--set hal.make.bsp_cflags_optimization -O0 "
     echo "INFO: Prepare BSP for debug."
 fi
+
+BSP_GEN_ARGS+="--set hal.make.bsp_cflags_user_flags ${BSP_CFLAGS} "
 
 nios2-bsp ${BSP_GEN_ARGS}
 RET=$?
@@ -227,6 +235,11 @@ APP_GEN_ARGS="\
 --set QUARTUS_PROJECT_DIR=${BOARD_PATH}/quartus \
 --set OPLK_BASE_DIR=${OPLK_BASE_DIR} \
 "
+
+# Add flag for explicitly using EPCS flash.
+if [ -n "${SEL_EPCS}" ]; then
+    APP_CFLAGS+="-DALT_USE_EPCS_FLASH "
+fi
 
 # Add application CFLAGS
 if [ -n "${APP_CFLAGS}" ]; then
