@@ -1,15 +1,15 @@
 -------------------------------------------------------------------------------
 --! @file toplevel.vhd
 --
---! @brief Toplevel of DE2i-150 board PCIe-MN design part
+--! @brief Toplevel of DE2i-150 development board PCIe-MN design part
 --
 --! @details This is the toplevel of the Nios MN FPGA Pcp design for the
---! INK DE2i-150 Evaluation Board.
+--! DE2i-150 development Board.
 --
 -------------------------------------------------------------------------------
 --
 --    (c) B&R, 2014
---    (c) Kalycito Infotech Private Limited, 2014
+--    (c) Kalycito Infotech Private Limited, 2015
 --
 --    Redistribution and use in source and binary forms, with or without
 --    modification, are permitted provided that the following conditions
@@ -55,7 +55,7 @@ entity toplevel is
     port (
         --------- CLOCK ---------
         --! External 50Mhz Clock input
-         CLOCK_50           : in    std_logic;
+         EXT_CLK           : in    std_logic;
         --------- EEP ---------
         --! I2C Clock for EEPROM
         EEP_I2C_SCLK        : out   std_logic;
@@ -64,10 +64,6 @@ entity toplevel is
         --------- ENET ---------
         --! Ethernet GTX Clock
         ENET_GTX_CLK        : out   std_logic;
-        --! Ethernet active low INIT
-        ENET_INT_N          : in    std_logic;
-        --! Ethernet link100 input
-        ENET_LINK100        : in    std_logic;
         --! Ethernet MDC
         ENET_MDC            : out   std_logic_vector(0 downto 0);
         --! Ethernet MDIO
@@ -76,10 +72,6 @@ entity toplevel is
         ENET_RST_N          : out   std_logic_vector(0 downto 0);
         --! Ethernet Rx Clock
         ENET_RX_CLK         : in    std_logic_vector(0 downto 0);
-        --! Ethernet RX collision
-        ENET_RX_COL         : in    std_logic;
-        --! Ethernet CRS
-        ENET_RX_CRS         : in    std_logic;
         --! Ethernet Rx Data
         ENET_RX_DATA        : in    std_logic_vector (3 downto 0);
         --! Ethernet Rx Data Valid
@@ -115,48 +107,12 @@ entity toplevel is
         FS_DQ               : inout std_logic_vector (31 downto 0);
         --! Flash-SSRAN address
         FS_ADDR             : out   std_logic_vector (21 downto 0);
-        --------- GPIO ---------
-        GPIO                : inout std_logic_vector (35 downto 0);
-        --------- G ---------
-        G_SENSOR_INT1       : in    std_logic;
-        G_SENSOR_SCLK       : out   std_logic;
-        G_SENSOR_SDAT       : inout std_logic;
-        --------- HEX ---------
-        --! Seven Segment Display -1
-        HEX0         : out   std_logic_vector (6 downto 0);
-        --! Seven Segment Display -2
-        HEX1         : out   std_logic_vector (6 downto 0);
-        --! Seven Segment Display -3
-        HEX2         : out   std_logic_vector (6 downto 0);
-        --! Seven Segment Display -4
-        HEX3         : out   std_logic_vector (6 downto 0);
-        --! Seven Segment Display -5
-        HEX4         : out   std_logic_vector (6 downto 0);
-        --! Seven Segment Display -6
-        HEX5         : out   std_logic_vector (6 downto 0);
-        --! Seven Segment Display -7
-        HEX6         : out   std_logic_vector (6 downto 0);
-        --! Seven Segment Display -8
-        HEX7         : out   std_logic_vector (6 downto 0);
         --------- I2C ---------
         I2C_SCLK     : out   std_logic;
         I2C_SDAT     : inout std_logic;
-        --------- IRDA ---------
-        IRDA_RXD     : in    std_logic;
         --------- KEY ---------
         --! Key input
         KEY  :   in     std_logic_vector (3 downto 0);
-        --------- LCD ---------
-        --! LCD data
-        LCD_DATA     :   inout   std_logic_vector (7 downto 0);
-        --! LCD enable
-        LCD_EN   :   out      std_logic;
-        --! LCD On
-        LCD_ON   :   out      std_logic;
-        --! LCD RS
-        LCD_RS   :   out      std_logic;
-        --! LCD RW
-        LCD_RW   :   out      std_logic;
         --------- LEDG ---------
         --! LED Green
         LEDG     :   out     std_logic_vector (8 downto 0);
@@ -197,21 +153,8 @@ entity toplevel is
         --! SSRAM WE
         SSRAM_WE_N       : out   std_logic_vector(0 downto 0);
         --! SSRAM-0 Chip Enable
-        SSRAM0_CE_N      : out   std_logic_vector(0 downto 0);
-        --------- SW ---------
-        SW               : out  std_logic_vector (17 downto 0);
-        --------- TD --------
-        TD_CLK27     : in    std_logic;
-        TD_DATA      : in std_logic_vector (7 downto 0);
-        TD_HS        : in std_logic;
-        TD_RESET_N   : out std_logic;
-        TD_VS        : in std_logic;
-        --------- UART ---------
-        UART_CTS     : in        std_logic;
-        UART_RTS     : out       std_logic;
-        UART_RXD     : in        std_logic;
-        UART_TXD     : out       std_logic
-      );
+        SSRAM0_CE_N      : out   std_logic_vector(0 downto 0)
+       );
 end toplevel;
 
 architecture rtl of toplevel is
@@ -300,6 +243,7 @@ signal nios_flash_reset_n   : std_logic;
             openmac_smi_nPhyRst                        : out   std_logic_vector(0 downto 0);                     -- nPhyRst
             openmac_smi_clk                            : out   std_logic_vector(0 downto 0);                     -- clk
             openmac_smi_dio                            : inout std_logic_vector(0 downto 0)  := (others => 'X'); -- dio
+            openmac_0_mactimerout_export               : out   std_logic_vector(0 downto 0);                      -- export
             benchmark_pio_export                       : out   std_logic_vector(7 downto 0)
             );
     end component mnSingleDualProcDrv;
@@ -379,13 +323,14 @@ begin
                 openmac_smi_nPhyRst                        => ENET_RST_N,
                 openmac_smi_clk                            => ENET_MDC,
                 openmac_smi_dio                            => ENET_MDIO,
+                openmac_0_mactimerout_export               => open,
                 benchmark_pio_export                       => ledRG_b( 7 downto 0)
                 );
 
    --! PLL Instantiation
     PLL1: component pll
         port map (
-           inclk0   => CLOCK_50,
+           inclk0   => EXT_CLK,
            c0       => clk50,
            c1       => clk100,
            c2       => clk125,

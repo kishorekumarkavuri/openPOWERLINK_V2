@@ -138,14 +138,6 @@
          type = "String";
       }
    }
-   element openmac_0.pktBuf
-   {
-      datum baseAddress
-      {
-         value = "16384";
-         type = "String";
-      }
-   }
    element tri_state_0
    {
       datum _sortIndex
@@ -182,7 +174,7 @@
  <parameter name="projectName">mnSingleDualProcDrv.qpf</parameter>
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1425623710091" />
+ <parameter name="timeStamp" value="1426153410343" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_50.clk_in" type="clock" dir="end" />
@@ -269,6 +261,11 @@
  <interface
    name="pcie_ip_powerdown"
    internal="pcie_subsytem.pcie_ip_powerdown"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="openmac_0_mactimerout"
+   internal="openmac_0.macTimerOut"
    type="conduit"
    dir="end" />
  <module kind="clock_source" version="13.0" enabled="1" name="clk_50">
@@ -383,7 +380,7 @@
   <parameter name="gui_phyType" value="2" />
   <parameter name="gui_phyCount" value="1" />
   <parameter name="gui_extraSmi" value="false" />
-  <parameter name="gui_txBufLoc" value="1" />
+  <parameter name="gui_txBufLoc" value="2" />
   <parameter name="gui_txBufSize" value="16" />
   <parameter name="gui_txBurstSize" value="1" />
   <parameter name="gui_rxBufLoc" value="2" />
@@ -395,7 +392,7 @@
   <parameter name="gui_actEn" value="false" />
   <parameter name="gui_sdcEn" value="true" />
   <parameter name="AUTO_DMACLK_CLOCK_RATE" value="100000000" />
-  <parameter name="AUTO_PKTCLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_PKTCLK_CLOCK_RATE" value="-1" />
  </module>
  <module
    kind="altera_avalon_epcs_flash_controller"
@@ -481,7 +478,6 @@
    version="13.0"
    start="clk_100.clk"
    end="openmac_0.mainClkx2" />
- <connection kind="clock" version="13.0" start="clk_50.clk" end="openmac_0.pktClk" />
  <connection
    kind="reset"
    version="13.0"
@@ -502,16 +498,6 @@
    version="13.0"
    start="clk_100.clk_reset"
    end="openmac_0.dmaRst" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_50.clk_reset"
-   end="openmac_0.pktRst" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_100.clk_reset"
-   end="openmac_0.pktRst" />
  <connection
    kind="avalon"
    version="13.0"
@@ -528,15 +514,6 @@
    end="openmac_0.macTimer">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x1fd0" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="13.0"
-   start="pcp_0.slow_bridge"
-   end="openmac_0.pktBuf">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x4000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -643,15 +620,6 @@
    version="13.0"
    start="clk_50.clk"
    end="pcie_subsytem.clk" />
- <connection
-   kind="avalon"
-   version="13.0"
-   start="pcie_subsytem.bar_0"
-   end="SSRAM_0.uas">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
 </system>
