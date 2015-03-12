@@ -174,7 +174,7 @@
  <parameter name="projectName">mnSingleDualProcDrv.qpf</parameter>
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1426153410343" />
+ <parameter name="timeStamp" value="1426154765698" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_50.clk_in" type="clock" dir="end" />
@@ -620,6 +620,15 @@
    version="13.0"
    start="clk_50.clk"
    end="pcie_subsytem.clk" />
+ <connection
+   kind="avalon"
+   version="13.0"
+   start="pcie_subsytem.pcie_to_bar1_config_bridge"
+   end="SSRAM_0.uas">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
 </system>
