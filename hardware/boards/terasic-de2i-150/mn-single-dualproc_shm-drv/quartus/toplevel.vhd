@@ -55,7 +55,7 @@ entity toplevel is
     port (
         --------- CLOCK ---------
         --! External 50Mhz Clock input
-         EXT_CLK           : in    std_logic;
+         CLOCK_50           : in    std_logic;
         --------- EEP ---------
         --! I2C Clock for EEPROM
         EEP_I2C_SCLK        : out   std_logic;
@@ -330,7 +330,7 @@ begin
    --! PLL Instantiation
     PLL1: component pll
         port map (
-           inclk0   => EXT_CLK,
+           inclk0   => CLOCK_50,
            c0       => clk50,
            c1       => clk100,
            c2       => clk125,
