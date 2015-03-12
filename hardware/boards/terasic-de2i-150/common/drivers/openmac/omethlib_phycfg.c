@@ -1,15 +1,16 @@
 /**
 ********************************************************************************
-\file   omethlib_phycfg_ink.c
+\file   omethlib_phycfg.c
 
-\brief  openMAC phy configuration for INK DE2-115 evaluation board
+\brief  openMAC phy configuration for Terasic DE2i-150 development board
 
-This file contains phy configuration callback for the TERASIC INK DE2-115
-evaluation board.
+This file contains phy configuration callback for the TERASIC DE2i-150
+development board.
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
 Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2015, Kalycito Infotech Private Limited
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -94,7 +95,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /**
 \brief  Phy configuration callback
 
-This function configures the available 88E1111 phys on the INK DE2-115 board.
+This function configures the available 88E1111 phys on Terasic De2i-150 Development board.
 
 \param  pEth_p  Ethernet driver handle
 
