@@ -161,14 +161,6 @@
          type = "boolean";
       }
    }
-   element pcp_to_shmem_slow_bridge.s0
-   {
-      datum _lockedAddress
-      {
-         value = "0";
-         type = "boolean";
-      }
-   }
    element pcie_to_bar1_config_bridge.s0
    {
       datum baseAddress
@@ -177,7 +169,15 @@
          type = "String";
       }
    }
-   element led.s1
+   element pcp_to_shmem_slow_bridge.s0
+   {
+      datum _lockedAddress
+      {
+         value = "0";
+         type = "boolean";
+      }
+   }
+   element button.s1
    {
       datum _lockedAddress
       {
@@ -186,15 +186,7 @@
       }
       datum baseAddress
       {
-         value = "4128";
-         type = "String";
-      }
-   }
-   element host_benchmark.s1
-   {
-      datum baseAddress
-      {
-         value = "4096";
+         value = "4144";
          type = "String";
       }
    }
@@ -211,7 +203,15 @@
          type = "String";
       }
    }
-   element button.s1
+   element host_benchmark.s1
+   {
+      datum baseAddress
+      {
+         value = "4096";
+         type = "String";
+      }
+   }
+   element led.s1
    {
       datum _lockedAddress
       {
@@ -220,7 +220,7 @@
       }
       datum baseAddress
       {
-         value = "4144";
+         value = "4128";
          type = "String";
       }
    }
@@ -268,7 +268,7 @@
  <parameter name="projectName" value="" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1426138093546" />
+ <parameter name="timeStamp" value="1426154932825" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_50.clk_in" type="clock" dir="end" />
@@ -342,11 +342,6 @@
  <interface
    name="pcie_ip_refclk"
    internal="pcie_ip.refclk"
-   type="conduit"
-   dir="end" />
- <interface
-   name="host_benchmark_external_connection"
-   internal="host_benchmark.external_connection"
    type="conduit"
    dir="end" />
  <interface
