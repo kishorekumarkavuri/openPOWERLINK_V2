@@ -147,11 +147,6 @@
          value = "7";
          type = "int";
       }
-      datum sopceditor_expanded
-      {
-         value = "1";
-         type = "boolean";
-      }
    }
    element pcp_to_shmem_slow_bridge
    {
@@ -195,6 +190,14 @@
          type = "String";
       }
    }
+   element host_benchmark.s1
+   {
+      datum baseAddress
+      {
+         value = "4096";
+         type = "String";
+      }
+   }
    element onchip_memory.s1
    {
       datum _lockedAddress
@@ -218,14 +221,6 @@
       datum baseAddress
       {
          value = "4144";
-         type = "String";
-      }
-   }
-   element host_benchmark.s1
-   {
-      datum baseAddress
-      {
-         value = "4096";
          type = "String";
       }
    }
@@ -273,7 +268,7 @@
  <parameter name="projectName" value="" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1425627060783" />
+ <parameter name="timeStamp" value="1426138093546" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_50.clk_in" type="clock" dir="end" />
@@ -297,11 +292,6 @@
  <interface
    name="pcp_to_shmem_bridge"
    internal="pcp_to_shmem_slow_bridge.s0"
-   type="avalon"
-   dir="end" />
- <interface
-   name="pcp_to_pcie_sub_config"
-   internal="pcp_to_pcie_config_bridge.s0"
    type="avalon"
    dir="end" />
  <interface
@@ -355,10 +345,10 @@
    type="conduit"
    dir="end" />
  <interface
-   name="bar_0"
-   internal="pcie_to_bar1_config_bridge.m0"
-   type="avalon"
-   dir="start" />
+   name="host_benchmark_external_connection"
+   internal="host_benchmark.external_connection"
+   type="conduit"
+   dir="end" />
  <interface
    name="pcie_ip_fixedclk"
    internal="pcie_ip.fixedclk"
@@ -369,6 +359,16 @@
    internal="pcie_ip.powerdown"
    type="conduit"
    dir="end" />
+ <interface
+   name="pcp_to_pcie_sub_config"
+   internal="pcp_to_pcie_config_bridge.s0"
+   type="avalon"
+   dir="end" />
+ <interface
+   name="pcie_to_bar1_config_bridge"
+   internal="pcie_to_bar1_config_bridge.m0"
+   type="avalon"
+   dir="start" />
  <module kind="clock_source" version="13.0" enabled="1" name="clk_50">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
@@ -443,24 +443,6 @@
   <parameter name="IRQ_WIDTH" value="1" />
   <parameter name="IRQ_N" value="0" />
   <parameter name="AUTO_CLK_CLOCK_RATE" value="100000000" />
-  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
- </module>
- <module
-   kind="altera_avalon_mm_clock_crossing_bridge"
-   version="13.0"
-   enabled="1"
-   name="pcp_to_pcie_config_bridge">
-  <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="SYMBOL_WIDTH" value="8" />
-  <parameter name="ADDRESS_WIDTH" value="14" />
-  <parameter name="ADDRESS_UNITS" value="SYMBOLS" />
-  <parameter name="MAX_BURST_SIZE" value="1" />
-  <parameter name="COMMAND_FIFO_DEPTH" value="4" />
-  <parameter name="RESPONSE_FIFO_DEPTH" value="4" />
-  <parameter name="MASTER_SYNC_DEPTH" value="2" />
-  <parameter name="SLAVE_SYNC_DEPTH" value="2" />
-  <parameter name="AUTO_M0_CLK_CLOCK_RATE" value="125000000" />
-  <parameter name="AUTO_S0_CLK_CLOCK_RATE" value="50000000" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
  </module>
  <module
@@ -635,6 +617,23 @@
   <parameter name="width" value="8" />
   <parameter name="clockRate" value="125000000" />
  </module>
+ <module
+   kind="altera_avalon_mm_bridge"
+   version="13.0"
+   enabled="1"
+   name="pcp_to_pcie_config_bridge">
+  <parameter name="DATA_WIDTH" value="32" />
+  <parameter name="SYMBOL_WIDTH" value="8" />
+  <parameter name="ADDRESS_WIDTH" value="14" />
+  <parameter name="ADDRESS_UNITS" value="SYMBOLS" />
+  <parameter name="MAX_BURST_SIZE" value="1" />
+  <parameter name="MAX_PENDING_RESPONSES" value="4" />
+  <parameter name="LINEWRAPBURSTS" value="0" />
+  <parameter name="PIPELINE_COMMAND" value="1" />
+  <parameter name="PIPELINE_RESPONSE" value="1" />
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV GX" />
+ </module>
  <connection
    kind="reset"
    version="13.0"
@@ -671,21 +670,6 @@
    version="13.0"
    start="clk_100.clk_reset"
    end="onchip_memory.reset2" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_50.clk_reset"
-   end="pcp_to_pcie_config_bridge.m0_reset" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_50.clk_reset"
-   end="pcp_to_pcie_config_bridge.s0_reset" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_100.clk_reset"
-   end="pcp_to_pcie_config_bridge.s0_reset" />
  <connection
    kind="clock"
    version="13.0"
@@ -752,20 +736,6 @@
    version="13.0"
    start="pcie_ip.pcie_core_reset"
    end="sync_irq.clk_reset" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="pcie_ip.pcie_core_reset"
-   end="pcp_to_pcie_config_bridge.m0_reset" />
- <connection
-   kind="avalon"
-   version="13.0"
-   start="pcp_to_pcie_config_bridge.m0"
-   end="pcie_ip.cra">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
  <connection
    kind="clock"
    version="13.0"
@@ -875,15 +845,29 @@
    end="pcie_to_bar1_config_bridge.m0_clk" />
  <connection kind="clock" version="13.0" start="clk_100.clk" end="sync_irq.clk" />
  <connection
-   kind="clock"
+   kind="avalon"
    version="13.0"
-   start="pcie_ip.pcie_core_clk"
-   end="pcp_to_pcie_config_bridge.m0_clk" />
+   start="pcp_to_pcie_config_bridge.m0"
+   end="pcie_ip.cra">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
  <connection
    kind="clock"
    version="13.0"
    start="clk_50.clk"
-   end="pcp_to_pcie_config_bridge.s0_clk" />
+   end="pcp_to_pcie_config_bridge.clk" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="clk_100.clk_reset"
+   end="pcp_to_pcie_config_bridge.reset" />
+ <connection
+   kind="reset"
+   version="13.0"
+   start="clk_50.clk_reset"
+   end="pcp_to_pcie_config_bridge.reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
 </system>

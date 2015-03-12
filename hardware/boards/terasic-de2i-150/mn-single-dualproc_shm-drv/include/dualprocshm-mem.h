@@ -10,7 +10,7 @@ to be used for the platform.
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
-Copyright (c) 2014, Kalycito Infotech Private Limited
+Copyright (c) 2015, Kalycito Infotech Private Limited
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -38,25 +38,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef _INC_dualprocshm_mem_H_
 #define _INC_dualprocshm_mem_H_
-
-//------------------------------------------------------------------------------
-// includes
-//------------------------------------------------------------------------------
-
 //------------------------------------------------------------------------------
 // const defines
 //------------------------------------------------------------------------------
 /* Memory size */
-#define MAX_COMMON_MEM_SIZE        2048                         ///< Max common memory size
-#define MAX_DYNAMIC_BUFF_COUNT     20                           ///< Number of maximum dynamic buffers
-#define MAX_DYNAMIC_BUFF_SIZE      MAX_DYNAMIC_BUFF_COUNT * 4   ///< Max dynamic buffer size
+#define MAX_COMMON_MEM_SIZE         2048                         ///< Max common memory size
+#define MAX_DYNAMIC_BUFF_COUNT      20                           ///< Number of maximum dynamic buffers
+#define MAX_DYNAMIC_BUFF_SIZE       MAX_DYNAMIC_BUFF_COUNT * 4   ///< Max dynamic buffer size
 
 /* BASE ADDRESSES */
-#define SHARED_MEM_BASE           SSRAM_0_BASE
-#define SHARED_MEM_SIZE           SSRAM_0_SPAN
-#define COMMON_MEM_BASE            PCIE_SUBSYTEM_ONCHIP_MEMORY_BASE
-#define MEM_ADDR_TABLE_OFFSET      MAX_COMMON_MEM_SIZE
-#define MEM_INTR_OFFSET            (MEM_ADDR_TABLE_OFFSET + MAX_DYNAMIC_BUFF_SIZE)
+#define SHARED_MEM_BASE             SSRAM_0_BASE
+#define SHARED_MEM_SIZE             SSRAM_0_SPAN
+#define COMMON_MEM_BASE             PCIE_SUBSYTEM_ONCHIP_MEMORY_BASE
+#define MEM_ADDR_TABLE_OFFSET       MAX_COMMON_MEM_SIZE
+#define MEM_INTR_OFFSET             (MEM_ADDR_TABLE_OFFSET + MAX_DYNAMIC_BUFF_SIZE)
 
 /* Queue Size */
 #define CONFIG_EVENT_SIZE_CIRCBUF_KERNEL_TO_USER    16384
@@ -64,11 +59,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define CONFIG_DLLCAL_BUFFER_SIZE_TX_NMT            2048
 #define CONFIG_DLLCAL_BUFFER_SIZE_TX_GEN            2048
 #define CONFIG_DLLCAL_BUFFER_SIZE_TX_VETH           1024
-
-//------------------------------------------------------------------------------
-// typedef
-//------------------------------------------------------------------------------
-
 //------------------------------------------------------------------------------
 // function prototypes
 //------------------------------------------------------------------------------

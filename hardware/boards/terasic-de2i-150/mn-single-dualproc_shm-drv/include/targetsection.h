@@ -2,7 +2,7 @@
 ********************************************************************************
 \file   targetsection.h
 
-\brief  Special function linking for TERASIC DE2-150 Board MN driver
+\brief  Special function linking for TERASIC De2i-150 development Board MN driver
 
 This header file defines macros for Altera Nios II targets to link specific
 functions to tightly-coupled memory.
@@ -10,6 +10,7 @@ functions to tightly-coupled memory.
 
 /*------------------------------------------------------------------------------
 Copyright (c) 2014, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2015, Kalycito Infotech Private Limited
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
