@@ -174,7 +174,7 @@
  <parameter name="projectName">mnSingleDualProcDrv.qpf</parameter>
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1426154765698" />
+ <parameter name="timeStamp" value="1426852072134" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_50.clk_in" type="clock" dir="end" />
@@ -294,6 +294,12 @@
   <parameter name="AUTO_PCIE_IP_FIXEDCLK_CLOCK_RATE" value="125000000" />
   <parameter name="AUTO_PCIE_IP_FIXEDCLK_CLOCK_DOMAIN" value="3" />
   <parameter name="AUTO_PCIE_IP_FIXEDCLK_RESET_DOMAIN" value="3" />
+  <parameter name="vendor_id" value="4466" />
+  <parameter name="device_id" value="57345" />
+  <parameter name="revision_id" value="1" />
+  <parameter name="class_code" value="0" />
+  <parameter name="subsystem_vendor_id" value="4466" />
+  <parameter name="subsystem_id" value="4" />
  </module>
  <module kind="mn_pcp" version="1.0" enabled="1" name="pcp_0">
   <parameter name="AUTO_GENERATION_ID" value="0" />
