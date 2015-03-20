@@ -177,16 +177,11 @@
          type = "boolean";
       }
    }
-   element button.s1
+   element host_benchmark.s1
    {
-      datum _lockedAddress
-      {
-         value = "0";
-         type = "boolean";
-      }
       datum baseAddress
       {
-         value = "4144";
+         value = "4096";
          type = "String";
       }
    }
@@ -203,11 +198,16 @@
          type = "String";
       }
    }
-   element host_benchmark.s1
+   element button.s1
    {
+      datum _lockedAddress
+      {
+         value = "0";
+         type = "boolean";
+      }
       datum baseAddress
       {
-         value = "4096";
+         value = "4144";
          type = "String";
       }
    }
@@ -268,9 +268,66 @@
  <parameter name="projectName" value="" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1426154932825" />
+ <parameter name="timeStamp" value="1426851360776" />
  <parameter name="useTestBenchNamingPattern" value="false" />
- <instanceScript></instanceScript>
+ <instanceParameter
+   name="vendor_id"
+   displayName="PCIe Vendor Id"
+   type="integer"
+   defaultValue="0"
+   legalRanges=""
+   description="" />
+ <instanceParameter
+   name="device_id"
+   displayName="PCIe Device Id"
+   type="integer"
+   defaultValue="0"
+   legalRanges=""
+   description="" />
+ <instanceParameter
+   name="revision_id"
+   displayName="PCIe Revision Id"
+   type="integer"
+   defaultValue="0"
+   legalRanges=""
+   description="" />
+ <instanceParameter
+   name="class_code"
+   displayName="PCIe Class Code"
+   type="integer"
+   defaultValue="0"
+   legalRanges=""
+   description="" />
+ <instanceParameter
+   name="subsystem_vendor_id"
+   displayName="PCIe Subsystem Vendor Id"
+   type="integer"
+   defaultValue="0"
+   legalRanges=""
+   description="" />
+ <instanceParameter
+   name="subsystem_id"
+   displayName="PCIe Subsystem Id"
+   type="integer"
+   defaultValue="0"
+   legalRanges=""
+   description="" />
+ <instanceScript><![CDATA[# request a specific version of the scripting API
+package require -exact qsys 12.1
+
+# Set the name of the procedure to manipulate parameters
+set_module_property COMPOSITION_CALLBACK compose
+
+proc compose {} {
+    # manipulate parameters in here
+    # Example: set_instance_parameter_value child0 param0 [ get_parameter_value new_parameter_0 ]
+    set_instance_parameter_value pcie_ip vendor_id [ get_parameter_value vendor_id ]
+    set_instance_parameter_value pcie_ip device_id [ get_parameter_value device_id ]
+    set_instance_parameter_value pcie_ip revision_id [ get_parameter_value revision_id ]
+    set_instance_parameter_value pcie_ip class_code [ get_parameter_value class_code ]
+    set_instance_parameter_value pcie_ip subsystem_vendor_id [ get_parameter_value subsystem_vendor_id ]
+    set_instance_parameter_value pcie_ip subsystem_device_id [ get_parameter_value subsystem_id ]
+}]]></instanceScript>
  <interface name="clk" internal="clk_50.clk_in" type="clock" dir="end" />
  <interface name="reset" internal="clk_50.clk_in_reset" type="reset" dir="end" />
  <interface
