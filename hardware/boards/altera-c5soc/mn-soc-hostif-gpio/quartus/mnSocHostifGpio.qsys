@@ -12,6 +12,14 @@
    element $${FILENAME}
    {
    }
+   element ddr3_emif_0.avl_0
+   {
+      datum baseAddress
+      {
+         value = "0";
+         type = "String";
+      }
+   }
    element clk_100
    {
       datum _sortIndex
@@ -68,7 +76,7 @@
    {
       datum _sortIndex
       {
-         value = "5";
+         value = "4";
          type = "int";
       }
       datum sopceditor_expanded
@@ -103,6 +111,22 @@
          type = "boolean";
       }
    }
+   element openmac_0.macReg
+   {
+      datum baseAddress
+      {
+         value = "16384";
+         type = "String";
+      }
+   }
+   element openmac_0.macTimer
+   {
+      datum baseAddress
+      {
+         value = "24576";
+         type = "String";
+      }
+   }
    element openmac_0
    {
       datum _sortIndex
@@ -120,13 +144,16 @@
    {
       datum _sortIndex
       {
-         value = "3";
+         value = "5";
          type = "int";
       }
-      datum sopceditor_expanded
+   }
+   element openmac_0.pktBuf
+   {
+      datum baseAddress
       {
-         value = "1";
-         type = "boolean";
+         value = "32768";
+         type = "String";
       }
    }
    element led_pio.s1
@@ -141,7 +168,7 @@
    {
       datum _sortIndex
       {
-         value = "4";
+         value = "3";
          type = "int";
       }
       datum sopceditor_expanded
@@ -163,7 +190,7 @@
  <parameter name="hdlLanguage" value="VERILOG" />
  <parameter name="hideFromIPCatalog" value="false" />
  <parameter name="maxAdditionalLatency" value="1" />
- <parameter name="projectName">mn-soc-hostif--gpio.qpf</parameter>
+ <parameter name="projectName">mn-soc-hostif-gpio.qpf</parameter>
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="0" />
  <parameter name="testBenchDutName" value="" />
@@ -256,6 +283,11 @@
    name="hps_0_f2h_warm_reset_req"
    internal="host_0.hps_0_f2h_warm_reset_req"
    type="reset"
+   dir="end" />
+ <interface
+   name="pcp_1_cpu_resetrequest"
+   internal="pcp_0.cpu_resetrequest"
+   type="conduit"
    dir="end" />
  <module
    kind="altera_mem_if_ddr3_emif"
@@ -582,20 +614,6 @@
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
  </module>
- <module kind="mn_soc_pcp" version="1.0" enabled="1" name="pcp_0">
-  <parameter name="AUTO_GENERATION_ID" value="0" />
-  <parameter name="AUTO_UNIQUE_ID" value="$${FILENAME}_pcp_0" />
-  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
-  <parameter name="AUTO_DEVICE" value="5CSXFC6D6F31C6" />
-  <parameter name="AUTO_CLK50_CLOCK_RATE" value="50000000" />
-  <parameter name="AUTO_CLK50_CLOCK_DOMAIN" value="2" />
-  <parameter name="AUTO_CLK50_RESET_DOMAIN" value="2" />
-  <parameter name="AUTO_CLK100_CLOCK_RATE" value="100000000" />
-  <parameter name="AUTO_CLK100_CLOCK_DOMAIN" value="1" />
-  <parameter name="AUTO_CLK100_RESET_DOMAIN" value="1" />
-  <parameter name="AUTO_MAC_IRQ_INTERRUPTS_USED" value="1" />
-  <parameter name="AUTO_SYNC_IRQ_INTERRUPTS_USED" value="1" />
- </module>
  <module
    kind="altera_avalon_sysid_qsys"
    version="14.0"
@@ -686,33 +704,26 @@
   <parameter name="width" value="4" />
   <parameter name="clockRate" value="50000000" />
  </module>
+ <module kind="mn_pcp" version="1.0" enabled="1" name="pcp_0">
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_UNIQUE_ID" value="$${FILENAME}_pcp_0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="AUTO_DEVICE" value="5CSXFC6D6F31C6" />
+  <parameter name="AUTO_CLK50_CLOCK_RATE" value="50000000" />
+  <parameter name="AUTO_CLK50_CLOCK_DOMAIN" value="2" />
+  <parameter name="AUTO_CLK50_RESET_DOMAIN" value="2" />
+  <parameter name="AUTO_CLK100_CLOCK_RATE" value="100000000" />
+  <parameter name="AUTO_CLK100_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK100_RESET_DOMAIN" value="1" />
+  <parameter name="AUTO_SYNC_IRQ_INTERRUPTS_USED" value="1" />
+  <parameter name="AUTO_MAC_IRQ_INTERRUPTS_USED" value="1" />
+  <parameter name="AUTO_GP_IRQ_INTERRUPTS_USED" value="0" />
+ </module>
  <connection
    kind="reset"
    version="14.0"
    start="clk_50.clk_reset"
    end="clk_100.clk_in_reset" />
- <connection
-   kind="reset"
-   version="14.0"
-   start="clk_50.clk_reset"
-   end="pcp_0.resetclk50" />
- <connection
-   kind="reset"
-   version="14.0"
-   start="clk_50.clk_reset"
-   end="pcp_0.resetclk100" />
- <connection
-   kind="reset"
-   version="14.0"
-   start="clk_100.clk_reset"
-   end="pcp_0.resetclk100" />
- <connection kind="clock" version="14.0" start="clk_50.clk" end="pcp_0.clk50" />
- <connection kind="clock" version="14.0" start="clk_100.clk" end="pcp_0.clk100" />
- <connection
-   kind="reset"
-   version="14.0"
-   start="clk_100.clk_reset"
-   end="pcp_0.resetclk50" />
  <connection
    kind="clock"
    version="14.0"
@@ -769,15 +780,6 @@
    version="14.0"
    start="clk_100.clk_reset"
    end="sysid_qsys.reset" />
- <connection
-   kind="avalon"
-   version="14.0"
-   start="pcp_0.cpu_bridge_m0"
-   end="ddr3_emif_0.avl_0">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
  <connection
    kind="avalon"
    version="14.0"
@@ -877,42 +879,6 @@
  <connection
    kind="avalon"
    version="14.0"
-   start="pcp_0.slow_bridge_m0"
-   end="hostinterface_0.pcp">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x6000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="14.0"
-   start="pcp_0.slow_bridge_m0"
-   end="openmac_0.macReg">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x4000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="14.0"
-   start="pcp_0.slow_bridge_m0"
-   end="openmac_0.macTimer">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x6800" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="14.0"
-   start="pcp_0.slow_bridge_m0"
-   end="openmac_0.pktBuf">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="14.0"
    start="openmac_0.dma"
    end="ddr3_emif_0.avl_0">
   <parameter name="arbitrationPriority" value="1" />
@@ -936,20 +902,6 @@
  <connection
    kind="interrupt"
    version="14.0"
-   start="pcp_0.mac_irq"
-   end="openmac_0.macIrq">
-  <parameter name="irqNumber" value="0" />
- </connection>
- <connection
-   kind="interrupt"
-   version="14.0"
-   start="pcp_0.sync_irq"
-   end="openmac_0.timerIrq">
-  <parameter name="irqNumber" value="0" />
- </connection>
- <connection
-   kind="interrupt"
-   version="14.0"
    start="hostinterface_0.irqSync"
    end="openmac_0.timerIrq">
   <parameter name="irqNumber" value="0" />
@@ -962,28 +914,10 @@
   <parameter name="irqNumber" value="0" />
  </connection>
  <connection
-   kind="avalon"
-   version="14.0"
-   start="pcp_0.slow_bridge_m0"
-   end="sysid_qsys.control_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x6810" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
    kind="clock"
    version="14.0"
    start="clk_100.clk"
    end="epcq_flash_controller_0.clk" />
- <connection
-   kind="avalon"
-   version="14.0"
-   start="pcp_0.flash_bridge_m0"
-   end="epcq_flash_controller_0.epcs_control_port">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
  <connection
    kind="reset"
    version="14.0"
@@ -1012,6 +946,105 @@
    end="led_pio.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x6900" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection kind="clock" version="14.0" start="clk_50.clk" end="pcp_0.clk50" />
+ <connection kind="clock" version="14.0" start="clk_100.clk" end="pcp_0.clk100" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_100.clk_reset"
+   end="pcp_0.rst_clk50" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_50.clk_reset"
+   end="pcp_0.rst_clk50" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_50.clk_reset"
+   end="pcp_0.rst_clk100" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_100.clk_reset"
+   end="pcp_0.rst_clk100" />
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcp_0.cpu_bridge"
+   end="ddr3_emif_0.avl_0">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcp_0.slow_bridge"
+   end="sysid_qsys.control_slave">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x6810" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcp_0.slow_bridge"
+   end="openmac_0.macReg">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x4000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcp_0.slow_bridge"
+   end="openmac_0.macTimer">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x6000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcp_0.slow_bridge"
+   end="openmac_0.pktBuf">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x8000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcp_0.slow_bridge"
+   end="hostinterface_0.pcp">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="interrupt"
+   version="14.0"
+   start="pcp_0.sync_irq"
+   end="openmac_0.timerIrq">
+  <parameter name="irqNumber" value="0" />
+ </connection>
+ <connection
+   kind="interrupt"
+   version="14.0"
+   start="pcp_0.mac_irq"
+   end="openmac_0.macIrq">
+  <parameter name="irqNumber" value="0" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcp_0.flash_bridge"
+   end="epcq_flash_controller_0.epcs_control_port">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
