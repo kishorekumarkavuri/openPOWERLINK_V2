@@ -114,11 +114,11 @@
          type = "boolean";
       }
    }
-   element pcie_ip
+   element pcie_bar0_config_bridge
    {
       datum _sortIndex
       {
-         value = "2";
+         value = "9";
          type = "int";
       }
       datum sopceditor_expanded
@@ -127,11 +127,11 @@
          type = "boolean";
       }
    }
-   element pcie_to_bar1_config_bridge
+   element pcie_ip
    {
       datum _sortIndex
       {
-         value = "9";
+         value = "2";
          type = "int";
       }
       datum sopceditor_expanded
@@ -161,14 +161,6 @@
          type = "boolean";
       }
    }
-   element pcie_to_bar1_config_bridge.s0
-   {
-      datum baseAddress
-      {
-         value = "0";
-         type = "String";
-      }
-   }
    element pcp_to_shmem_slow_bridge.s0
    {
       datum _lockedAddress
@@ -177,7 +169,15 @@
          type = "boolean";
       }
    }
-   element led.s1
+   element pcie_bar0_config_bridge.s0
+   {
+      datum baseAddress
+      {
+         value = "0";
+         type = "String";
+      }
+   }
+   element button.s1
    {
       datum _lockedAddress
       {
@@ -186,7 +186,7 @@
       }
       datum baseAddress
       {
-         value = "4128";
+         value = "4160";
          type = "String";
       }
    }
@@ -211,7 +211,7 @@
          type = "String";
       }
    }
-   element button.s1
+   element led.s1
    {
       datum _lockedAddress
       {
@@ -220,7 +220,7 @@
       }
       datum baseAddress
       {
-         value = "4144";
+         value = "4128";
          type = "String";
       }
    }
@@ -268,7 +268,7 @@
  <parameter name="projectName" value="" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1427089211605" />
+ <parameter name="timeStamp" value="1431408142559" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceParameter
    name="vendor_id"
@@ -417,8 +417,8 @@ proc compose {} {
    type="avalon"
    dir="end" />
  <interface
-   name="pcie_to_bar1_config_bridge"
-   internal="pcie_to_bar1_config_bridge.m0"
+   name="pcie_bar0_config_bridge"
+   internal="pcie_bar0_config_bridge.m0"
    type="avalon"
    dir="start" />
  <interface name="pcie_ip_test_out" internal="pcie_ip.test_out" />
@@ -456,7 +456,7 @@ proc compose {} {
  </module>
  <module kind="altera_avalon_pio" version="13.0.1.99.2" enabled="1" name="led">
   <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="true" />
   <parameter name="captureEdge" value="false" />
   <parameter name="direction" value="Output" />
   <parameter name="edgeType" value="RISING" />
@@ -465,7 +465,7 @@ proc compose {} {
   <parameter name="resetValue" value="0" />
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="21" />
+  <parameter name="width" value="2" />
   <parameter name="clockRate" value="125000000" />
  </module>
  <module
@@ -638,7 +638,7 @@ proc compose {} {
    kind="altera_avalon_mm_clock_crossing_bridge"
    version="13.0"
    enabled="1"
-   name="pcie_to_bar1_config_bridge">
+   name="pcie_bar0_config_bridge">
   <parameter name="DATA_WIDTH" value="32" />
   <parameter name="SYMBOL_WIDTH" value="8" />
   <parameter name="ADDRESS_WIDTH" value="22" />
@@ -807,37 +807,37 @@ proc compose {} {
    kind="clock"
    version="13.0"
    start="pcie_ip.pcie_core_clk"
-   end="pcie_to_bar1_config_bridge.s0_clk" />
+   end="pcie_bar0_config_bridge.s0_clk" />
  <connection
    kind="reset"
    version="13.0"
    start="pcie_ip.pcie_core_reset"
-   end="pcie_to_bar1_config_bridge.s0_reset" />
+   end="pcie_bar0_config_bridge.s0_reset" />
  <connection
    kind="reset"
    version="13.0"
    start="pcie_ip.pcie_core_reset"
-   end="pcie_to_bar1_config_bridge.m0_reset" />
+   end="pcie_bar0_config_bridge.m0_reset" />
  <connection
    kind="reset"
    version="13.0"
    start="clk_100.clk_reset"
-   end="pcie_to_bar1_config_bridge.m0_reset" />
+   end="pcie_bar0_config_bridge.m0_reset" />
  <connection
    kind="reset"
    version="13.0"
    start="clk_100.clk_reset"
-   end="pcie_to_bar1_config_bridge.s0_reset" />
+   end="pcie_bar0_config_bridge.s0_reset" />
  <connection
    kind="reset"
    version="13.0"
    start="clk_50.clk_reset"
-   end="pcie_to_bar1_config_bridge.m0_reset" />
+   end="pcie_bar0_config_bridge.m0_reset" />
  <connection
    kind="reset"
    version="13.0"
    start="clk_50.clk_reset"
-   end="pcie_to_bar1_config_bridge.s0_reset" />
+   end="pcie_bar0_config_bridge.s0_reset" />
  <connection
    kind="reset"
    version="13.0"
@@ -879,14 +879,14 @@ proc compose {} {
  </connection>
  <connection kind="avalon" version="13.0" start="pcie_ip.bar1" end="button.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x1030" />
+  <parameter name="baseAddress" value="0x1040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
    kind="avalon"
    version="13.0"
    start="pcie_ip.bar0"
-   end="pcie_to_bar1_config_bridge.s0">
+   end="pcie_bar0_config_bridge.s0">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
@@ -895,7 +895,7 @@ proc compose {} {
    kind="clock"
    version="13.0"
    start="clk_100.clk"
-   end="pcie_to_bar1_config_bridge.m0_clk" />
+   end="pcie_bar0_config_bridge.m0_clk" />
  <connection kind="clock" version="13.0" start="clk_100.clk" end="sync_irq.clk" />
  <connection
    kind="avalon"
